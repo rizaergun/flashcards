@@ -27,6 +27,12 @@ class FlashcardInteractive extends Command
      */
     public function handle()
     {
-        return 0;
+        $defaultIndex = "create";
+
+        $index = $this->choice(
+            'What do you want to do?',
+            ['create', 'list', 'practice', 'stats', 'reset', 'exit'],
+            $defaultIndex
+        );
     }
 }
