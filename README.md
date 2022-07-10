@@ -9,3 +9,9 @@
 ### Command
 
 The command `php artisan flashcard:interactive` should present a main menu with the actions
+
+### Test
+
+```console
+php artisan test
+```
