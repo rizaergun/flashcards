@@ -52,5 +52,13 @@ class FlashcardInteractive extends Command
                 $this->error("The flashcard was not created!");
             }
         }
+
+        // List All Flashcards
+        if ($index === "list") {
+            $this->table(
+                ['Question', 'Answer'],
+                FlashCard::all(['question', 'answer'])->toArray()
+            );
+        }
     }
 }
