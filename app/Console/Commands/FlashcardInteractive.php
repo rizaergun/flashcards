@@ -99,7 +99,7 @@ class FlashcardInteractive extends Command
     public function practice()
     {
         $flashcards = Flashcard::all(['id', 'question', 'user_answer']);
-        $count_of_answered = Flashcard::answered();
+        $count_of_answered = Flashcard::answered()->count();
 
         // all flashcards to practice
         $this->table(
@@ -109,10 +109,10 @@ class FlashcardInteractive extends Command
 
         // progress bar
         $bar = $this->output->createProgressBar($flashcards->count());
-        $bar->advance($count_of_answered->count());
+        $bar->advance($count_of_answered);
         $this->newLine(2);
 
-        if ($flashcards->count() === $count_of_answered->count()) {
+        if ($flashcards->count() === $count_of_answered) {
             $this->warn('All questions answered. No questions to practice!');
             $this->menu();
             return 0;
