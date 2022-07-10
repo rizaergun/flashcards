@@ -120,9 +120,7 @@ class FlashcardInteractive extends Command
 
         $id = $this->ask('Which flashcard do you want to practice with? (ID)');
 
-        $flashcard = Flashcard::whereId($id)
-            ->whereIn('user_answer', ['not answered', 'incorrect'])
-            ->first();
+        $flashcard = Flashcard::whereId($id)->practicable()->first();
 
         if ($flashcard) {
             $this->line('Question: ' . $flashcard->question);

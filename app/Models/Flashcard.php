@@ -14,4 +14,9 @@ class Flashcard extends Model
         'answer',
         'user_answer'
     ];
+
+    public function scopePracticable($query)
+    {
+        $query->whereIn('user_answer', ['not answered', 'incorrect']);
+    }
 }
