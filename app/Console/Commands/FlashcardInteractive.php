@@ -134,5 +134,11 @@ class FlashcardInteractive extends Command
                         $percent_of_correct_answers]
                 ]);
         }
+
+        // Reset
+        if ($index === "reset") {
+            FlashCard::query()->update(['user_answer' => 'not answered']);
+            $this->info('All question answers have been reset!');
+        }
     }
 }
