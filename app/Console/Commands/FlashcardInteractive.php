@@ -51,7 +51,7 @@ class FlashcardInteractive extends Command
             return 1;
         }
 
-        $this->backMenuConfirmation();
+        $this->confirmationToReturnToTheMenu();
     }
 
     public function menu()
@@ -160,10 +160,7 @@ class FlashcardInteractive extends Command
 
         $this->table(['Total Questions', 'Answered', 'Correct Answer'],
             [
-                [
-                    $total_question,
-                    $percent_of_answered,
-                    $percent_of_correct_answers]
+                [$total_question, $percent_of_answered, $percent_of_correct_answers]
             ]);
     }
 
@@ -173,11 +170,11 @@ class FlashcardInteractive extends Command
         $this->info('All question answers have been reset!');
     }
 
-    public function backMenuConfirmation()
+    public function confirmationToReturnToTheMenu()
     {
-        $choosing = $this->confirm('Do you want to return to the main menu?', true);
+        $choice = $this->confirm('Do you want to return to the main menu?', true);
 
-        if ($choosing) {
+        if ($choice) {
             $this->menu();
         } else {
             return 1;
