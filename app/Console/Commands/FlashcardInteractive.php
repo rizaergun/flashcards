@@ -145,5 +145,7 @@ class FlashcardInteractive extends Command
         if ($index === "exit") {
             return 1;
         }
+
+        goto choice;
     }
 }
