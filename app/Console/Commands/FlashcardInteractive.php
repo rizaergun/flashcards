@@ -57,7 +57,7 @@ class FlashcardInteractive extends Command
         if ($index === "list") {
             $this->table(
                 ['Question', 'Answer'],
-                FlashCard::all(['question', 'answer'])->toArray()
+                Flashcard::all(['question', 'answer'])->toArray()
             );
         }
     }
