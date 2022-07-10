@@ -38,11 +38,14 @@ class FlashcardInteractive extends Command
         );
 
         // Create a Flashcard
+        create:
         if ($index === "create") {
             $question = $this->ask("What's the question?");
             $answer = $this->ask("What's the answer?");
 
-            if ($this->confirm("Do you wish to continue?")) {
+            $save = $this->confirm("Do you want to save?");
+
+            if ($save) {
                 $flashcard = Flashcard::create([
                     'question' => $question,
                     'answer' => $answer
@@ -51,6 +54,12 @@ class FlashcardInteractive extends Command
                 $this->info("The flashcard was created successfully!");
             } else {
                 $this->error("The flashcard was not created!");
+            }
+
+            $new = $this->confirm("Do you want to add a new flashcard?");
+
+            if ($new) {
+                goto create;
             }
         }
 

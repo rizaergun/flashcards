@@ -20,8 +20,9 @@ class FlashcardInteractiveTest extends TestCase
             ->expectsChoice('What do you want to do?', 'create', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
             ->expectsQuestion("What's the question?", "Test Question?")
             ->expectsQuestion("What's the answer?", "Test")
-            ->expectsConfirmation('Do you wish to continue?', 'yes')
+            ->expectsConfirmation('Do you want to save?', 'yes')
             ->expectsOutput('The flashcard was created successfully!')
+            ->expectsConfirmation('Do you want to add a new flashcard?')
             ->expectsChoice('What do you want to do?', 'exit', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
             ->assertExitCode(1);
     }
@@ -35,8 +36,9 @@ class FlashcardInteractiveTest extends TestCase
             ->expectsChoice('What do you want to do?', 'create', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
             ->expectsQuestion("What's the question?", "Test Question?")
             ->expectsQuestion("What's the answer?", "Test")
-            ->expectsConfirmation('Do you wish to continue?', 'no')
+            ->expectsConfirmation('Do you want to save?', 'no')
             ->expectsOutput('The flashcard was not created!')
+            ->expectsConfirmation('Do you want to add a new flashcard?')
             ->expectsChoice('What do you want to do?', 'exit', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
             ->assertExitCode(1);
     }
