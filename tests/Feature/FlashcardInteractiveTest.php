@@ -23,8 +23,8 @@ class FlashcardInteractiveTest extends TestCase
             ->expectsConfirmation('Do you want to save?', 'yes')
             ->expectsOutput('The flashcard was created successfully!')
             ->expectsConfirmation('Do you want to add a new flashcard?')
-            ->expectsChoice('What do you want to do?', 'exit', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
-            ->assertExitCode(1);
+            ->expectsConfirmation('Do you want to return to the main menu?', 'no')
+            ->assertExitCode(0);
     }
 
     /**
@@ -39,8 +39,8 @@ class FlashcardInteractiveTest extends TestCase
             ->expectsConfirmation('Do you want to save?', 'no')
             ->expectsOutput('The flashcard was not created!')
             ->expectsConfirmation('Do you want to add a new flashcard?')
-            ->expectsChoice('What do you want to do?', 'exit', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
-            ->assertExitCode(1);
+            ->expectsConfirmation('Do you want to return to the main menu?', 'no')
+            ->assertExitCode(0);
     }
 
     /**
@@ -55,8 +55,8 @@ class FlashcardInteractiveTest extends TestCase
             ->expectsTable(['Question', 'Answer'], [
                 ['Test question?', 'test']
             ])
-            ->expectsChoice('What do you want to do?', 'exit', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
-            ->assertExitCode(1);
+            ->expectsConfirmation('Do you want to return to the main menu?', 'no')
+            ->assertExitCode(0);
     }
 
     /**
@@ -67,8 +67,8 @@ class FlashcardInteractiveTest extends TestCase
         $this->artisan('flashcard:interactive')
             ->expectsChoice('What do you want to do?', 'practice', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
             ->expectsOutputToContain('All questions answered. No questions to practice!')
-            ->expectsChoice('What do you want to do?', 'exit', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
-            ->assertExitCode(1);
+            ->expectsConfirmation('Do you want to return to the main menu?', 'no')
+            ->assertExitCode(0);
     }
 
     /**
@@ -87,8 +87,8 @@ class FlashcardInteractiveTest extends TestCase
             ->expectsQuestion('What is your answer to this question?', 'test')
             ->expectsOutputToContain('Congratulations! You answered the question correctly!')
             ->expectsConfirmation('Do you wish to continue?')
-            ->expectsChoice('What do you want to do?', 'exit', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
-            ->assertExitCode(1);
+            ->expectsConfirmation('Do you want to return to the main menu?', 'no')
+            ->assertExitCode(0);
     }
 
     /**
@@ -108,8 +108,8 @@ class FlashcardInteractiveTest extends TestCase
             ->expectsTable(['Total Questions', 'Answered', 'Correct Answer'], [
                 ['2', '100%', '50%']
             ])
-            ->expectsChoice('What do you want to do?', 'exit', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
-            ->assertExitCode(1);
+            ->expectsConfirmation('Do you want to return to the main menu?', 'no')
+            ->assertExitCode(0);
     }
 
     /**
@@ -120,8 +120,8 @@ class FlashcardInteractiveTest extends TestCase
         $this->artisan('flashcard:interactive')
             ->expectsChoice('What do you want to do?', 'reset', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
             ->expectsOutput('All question answers have been reset!')
-            ->expectsChoice('What do you want to do?', 'exit', ['create', 'list', 'practice', 'stats', 'reset', 'exit'])
-            ->assertExitCode(1);
+            ->expectsConfirmation('Do you want to return to the main menu?', 'no')
+            ->assertExitCode(0);
     }
 
     /**
