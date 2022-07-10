@@ -137,8 +137,13 @@ class FlashcardInteractive extends Command
 
         // Reset
         if ($index === "reset") {
-            FlashCard::query()->update(['user_answer' => 'not answered']);
+            Flashcard::query()->update(['user_answer' => 'not answered']);
             $this->info('All question answers have been reset!');
+        }
+
+        // Exit
+        if ($index === "exit") {
+            return 1;
         }
     }
 }
