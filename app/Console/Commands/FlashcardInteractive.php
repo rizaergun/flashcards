@@ -21,6 +21,11 @@ class FlashcardInteractive extends Command
      */
     protected $description = 'Flashcard Interactive';
 
+    /**
+     * The selected index
+     *
+     * @var string
+     */
     protected string $index = "menu";
 
     /**
@@ -41,8 +46,7 @@ class FlashcardInteractive extends Command
         } else if ($this->index === "stats") {
             $this->stats();
         } else if ($this->index === "reset") {
-            Flashcard::query()->update(['user_answer' => 'not answered']);
-            $this->info('All question answers have been reset!');
+            $this->reset();
         } else if ($this->index === "exit") {
             return 1;
         }
@@ -163,6 +167,12 @@ class FlashcardInteractive extends Command
                     $percent_of_answered,
                     $percent_of_correct_answers]
             ]);
+    }
+
+    public function reset()
+    {
+        Flashcard::query()->update(['user_answer' => 'not answered']);
+        $this->info('All question answers have been reset!');
     }
 
     public function backMenuConfirmation()
