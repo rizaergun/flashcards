@@ -9,6 +9,10 @@ class Flashcard extends Model
 {
     use HasFactory;
 
+    const NOT_ANSWERED = "not answered";
+    const INCORRECT = "incorrect";
+    const CORRECT = "correct";
+
     protected $fillable = [
         'question',
         'answer',
@@ -17,6 +21,21 @@ class Flashcard extends Model
 
     public function scopePracticable($query)
     {
-        $query->whereIn('user_answer', ['not answered', 'incorrect']);
+        $query->whereIn('user_answer', [Flashcard::NOT_ANSWERED, Flashcard::INCORRECT]);
+    }
+
+    public function scopeCorrect($query)
+    {
+        $query->where('user_answer', Flashcard::CORRECT);
+    }
+
+    public function scopeIncorrect($query)
+    {
+        $query->where('user_answer', Flashcard::INCORRECT);
+    }
+
+    public function scopeAnswered($query)
+    {
+        $query->whereIn('user_answer', [Flashcard::INCORRECT, Flashcard::CORRECT]);
     }
 }

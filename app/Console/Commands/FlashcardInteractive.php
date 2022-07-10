@@ -99,7 +99,7 @@ class FlashcardInteractive extends Command
     public function practice()
     {
         $flashcards = Flashcard::all(['id', 'question', 'user_answer']);
-        $count_of_answered = Flashcard::whereIn('user_answer', ['correct', 'incorrect']);
+        $count_of_answered = Flashcard::answered();
 
         // all flashcards to practice
         $this->table(
@@ -127,11 +127,11 @@ class FlashcardInteractive extends Command
             $user_answer = $this->ask('What is your answer to this question?');
 
             if ($flashcard->answer === $user_answer) {
-                $flashcard->user_answer = "correct";
+                $flashcard->user_answer = Flashcard::CORRECT;
                 $flashcard->save();
                 $this->info('Congratulations! You answered the question correctly!');
             } else {
-                $flashcard->user_answer = "incorrect";
+                $flashcard->user_answer = Flashcard::INCORRECT;
                 $flashcard->save();
                 $this->error('Sorry! Your answer was not correct!');
             }
@@ -151,10 +151,10 @@ class FlashcardInteractive extends Command
         $percent_of_correct_answers = 0 . '%';
 
         if ($total_question) {
-            $answered = Flashcard::whereIn('user_answer', ['incorrect', 'correct'])->get()->count();
+            $answered = Flashcard::answered()->get()->count();
             $percent_of_answered = round(($answered / $total_question) * 100, 2) . '%';
 
-            $correct_answer = Flashcard::whereUserAnswer('correct')->get()->count();
+            $correct_answer = Flashcard::correct()->get()->count();
             $percent_of_correct_answers = round(($correct_answer / $total_question) * 100, 2) . '%';
         }
 
@@ -169,7 +169,7 @@ class FlashcardInteractive extends Command
 
     public function reset()
     {
-        Flashcard::query()->update(['user_answer' => 'not answered']);
+        Flashcard::query()->update(['user_answer' => Flashcard::NOT_ANSWERED]);
         $this->info('All question answers have been reset!');
     }
 
