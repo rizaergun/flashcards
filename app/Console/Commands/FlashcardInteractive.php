@@ -111,5 +111,28 @@ class FlashcardInteractive extends Command
                 goto practice;
             }
         }
+
+        // Stats
+        if ($index === "stats") {
+            $total_question = Flashcard::all()->count();
+            $percent_of_answered = 0 . '%';
+            $percent_of_correct_answers = 0 . '%';
+
+            if ($total_question) {
+                $answered = Flashcard::whereIn('user_answer', ['incorrect', 'correct'])->get()->count();
+                $percent_of_answered = round(($answered / $total_question) * 100, 2) . '%';
+
+                $correct_answer = Flashcard::whereUserAnswer('correct')->get()->count();
+                $percent_of_correct_answers = round(($correct_answer / $total_question) * 100, 2) . '%';
+            }
+
+            $this->table(['Total Questions', 'Answered', 'Correct Answer'],
+                [
+                    [
+                        $total_question,
+                        $percent_of_answered,
+                        $percent_of_correct_answers]
+                ]);
+        }
     }
 }
